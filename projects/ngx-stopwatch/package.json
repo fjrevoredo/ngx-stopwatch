@@ -1,0 +1,10 @@
+{
+  "name": "ngx-stopwatch",
+  "version": "0.0.1",
+  "description": "Minimalistic stopwatch for Angular applications",
+  "author": "Francisco Revoredo <fjrevoredo@gmail.com>",
+  "peerDependencies": {
+    "@angular/common": "^8.1.0",
+    "@angular/core": "^8.1.0"
+  }
+}
