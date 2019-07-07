@@ -67,7 +67,9 @@ export class NgxStopwatchComponent implements OnInit {
         this.incrementStopwatch();
       });
     } else {
-      this.laps.push(Object.assign({}, this.time));
+      if (this.lapEnabled) {
+        this.laps.push(Object.assign({}, this.time));
+      }
     }
   }
 
