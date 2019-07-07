@@ -44,7 +44,7 @@ export class NgxStopwatchComponent implements OnInit {
     this.start = new Date().getTime();
   }
 
-  private resetStopwatch(): void {
+  resetStopwatch(): void {
     if (this.running) {
       this.running = !this.running;
       this.timerObservable.unsubscribe();
