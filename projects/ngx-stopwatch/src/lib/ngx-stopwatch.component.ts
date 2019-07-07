@@ -19,8 +19,11 @@ export class NgxStopwatchComponent implements OnInit {
   maxLaps: number = 10;
   @Input()
   cycleLaps: boolean = false;
+  @Input()
+  language: string = 'en';
 
-  startButtonLabel: string = 'Start';
+  startButtonLabel: string;
+  resetButtonLabel: string;
   laps: TimeModel[] = [];
   running: boolean = false;
   start: any;
@@ -36,9 +39,7 @@ export class NgxStopwatchComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.lapEnabled) {
-      this.startButtonLabel = 'Start/Lap';
-    }
+    this.i18nInit();
     this.time = new TimeModel();
     this.initStopwatch();
   }
@@ -112,6 +113,87 @@ export class NgxStopwatchComponent implements OnInit {
     }
     this.time.milliseconds = timeDifference;
 
+  }
+
+  private i18nInit(): void {
+
+    switch (this.language) {
+      case 'en':
+        this.setEN();
+        break;
+      case 'es':
+        this.setES();
+        break;
+      case 'pt':
+        this.setPT();
+        break;
+      case 'cn':
+        this.setCN();
+        break;
+      case 'hi':
+        this.setHI();
+        break;
+      case 'ar':
+        this.setAR();
+        break;
+      default:
+        this.setEN();
+        break;
+    }
+  }
+
+  private setEN(): void {
+    if (this.lapEnabled) {
+      this.startButtonLabel = 'Start/Lap';
+    } else {
+      this.startButtonLabel = 'Start';
+    }
+    this.resetButtonLabel = 'Reset';
+  }
+
+  private setES(): void {
+    if (this.lapEnabled) {
+      this.startButtonLabel = 'Iniciar/Vuelta';
+    } else {
+      this.startButtonLabel = 'Iniciar';
+    }
+    this.resetButtonLabel = 'Resetear';
+  }
+
+  private setPT(): void {
+    if (this.lapEnabled) {
+      this.startButtonLabel = 'Começar/Colo';
+    } else {
+      this.startButtonLabel = 'Começar';
+    }
+    this.resetButtonLabel = 'Restabelecer';
+  }
+
+  private setCN(): void {
+    if (this.lapEnabled) {
+      this.startButtonLabel = '开始/膝部';
+    } else {
+      this.startButtonLabel = '开始';
+    }
+    this.resetButtonLabel = '重启';
+  }
+
+  private setHI(): void {
+    if (this.lapEnabled) {
+      this.startButtonLabel = 'शुरु/रीसेट';
+    } else {
+      this.startButtonLabel = 'शुरु';
+    }
+    this.resetButtonLabel = 'रीसेट';
+  }
+
+  private setAR(): void {
+    if (this.lapEnabled) {
+      this.startButtonLabel = 'حضن/بداية';
+    } else {
+      this.startButtonLabel = 'بداية';
+    }
+    this.resetButtonLabel = 'إعادة تعيين';
   }
 
 }
