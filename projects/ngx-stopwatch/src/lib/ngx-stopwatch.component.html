@@ -7,11 +7,11 @@
 </ul>
 
 <p>
-  {{formatTime(time.hours, 2)}} : {{formatTime(time.minutes, 2)}} : {{formatTime(time.seconds, 2)}} : <span
+  {{formatTime(time.hours, 2)}} : {{formatTime(time.minutes, 2)}} : {{formatTime(time.seconds, 2)}} <span
   *ngIf="showMillis"
-  class="millis">{{formatTime(time.milliseconds, 3)}}</span>
+  class="millis"> : {{formatTime(time.milliseconds, 3)}}</span>
 </p>
 <p>
-  <button (click)="startStopwatch()">Start</button>
+  <button (click)="startStopwatch()">{{startButtonLabel}}</button>
   <button (click)="resetStopwatch()">Reset</button>
 </p>

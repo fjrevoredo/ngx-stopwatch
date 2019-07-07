@@ -12,6 +12,8 @@
       "element",
       "lib",
       "kebab-case"
-    ]
+    ],
+    "typedef": [true, "call-signature", "parameter", "member-variable-declaration", "variable-declaration"],
+    "no-inferrable-types": [true, "ignore-params", "ignore-properties"]
   }
 }

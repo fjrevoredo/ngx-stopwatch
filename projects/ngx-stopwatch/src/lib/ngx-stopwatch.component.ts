@@ -1,40 +1,50 @@
-import {Component, OnInit} from '@angular/core';
-import {TimeModel} from "./time.model";
-import {Subscription, timer} from "rxjs";
+import {Component, Input, OnInit} from '@angular/core';
+import {TimeModel} from './time.model';
+import {Subscription, timer} from 'rxjs';
+
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'ngx-stopwatch',
   templateUrl: 'ngx-stopwatch.component.html',
-  styles: []
+  styleUrls: ['ngx-stopwatch.component.scss']
 })
 export class NgxStopwatchComponent implements OnInit {
-  lapEnabled = true;
+
+  @Input()
+  lapEnabled: boolean = true;
+  @Input()
+  showMillis: boolean = true;
+
+  startButtonLabel: string = 'Start';
   laps: TimeModel[] = [];
-  running = false;
-  showMillis = true;
+  running: boolean = false;
   start: any;
-  millisToHoursCotient = (1000 * 60 * 60);
-  millisToMinutesCotient = (1000 * 60);
-  millisToSecondsCotient = 1000;
+  millisToHoursCotient: number = (1000 * 60 * 60);
+  millisToMinutesCotient: number = (1000 * 60);
+  millisToSecondsCotient: number = 1000;
   counter: number;
   time: TimeModel;
-  increment = 50;
+  increment: number = 50;
   timerObservable: Subscription;
 
   constructor() {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
+    if (this.lapEnabled) {
+      this.startButtonLabel = 'Start/Lap';
+    }
     this.time = new TimeModel();
     this.initStopwatch();
   }
 
-  private initStopwatch() {
+  private initStopwatch(): void {
     this.time = new TimeModel();
     this.start = new Date().getTime();
   }
 
-  private resetStopwatch() {
+  private resetStopwatch(): void {
     if (this.running) {
       this.running = !this.running;
       this.timerObservable.unsubscribe();
@@ -43,12 +53,12 @@ export class NgxStopwatchComponent implements OnInit {
       this.initStopwatch();
     }
 
-    if(this.lapEnabled && this.laps.length > 0) {
+    if (this.lapEnabled && this.laps.length > 0) {
       this.laps = [];
     }
   }
 
-  startStopwatch() {
+  startStopwatch(): void {
     if (!this.running) {
       this.start = new Date().getTime();
       this.counter = 0;
@@ -61,36 +71,32 @@ export class NgxStopwatchComponent implements OnInit {
     }
   }
 
-  stopStopwatch() {
-    if (this.running) {
-      this.running = !this.running;
-      this.timerObservable.unsubscribe();
-    }
-  }
-
-  formatTime(time: number, digits: number) {
-    let fixedDigitNumber = time.toFixed(0);
+  formatTime(time: number, digits: number): string {
+    let fixedDigitNumber: string = time.toFixed(0);
     while (fixedDigitNumber.length < digits) {
       fixedDigitNumber = '0' + fixedDigitNumber;
     }
     return fixedDigitNumber;
   }
 
-  incrementStopwatch() {
-    let timeDifference = new Date().getTime() - this.start;
-    let hours = ~~(timeDifference / this.millisToHoursCotient);
+  incrementStopwatch(): void {
+    let timeDifference: number = new Date().getTime() - this.start;
+    // tslint:disable-next-line:no-bitwise
+    const hours: number = ~~(timeDifference / this.millisToHoursCotient);
     if (hours >= 1) {
       timeDifference = timeDifference - (hours * this.millisToHoursCotient);
       this.time.hours = hours;
     }
 
-    let minutes = ~~(timeDifference / this.millisToMinutesCotient);
+    // tslint:disable-next-line:no-bitwise
+    const minutes: number = ~~(timeDifference / this.millisToMinutesCotient);
     if (minutes >= 1) {
       timeDifference = timeDifference - (minutes * this.millisToMinutesCotient);
       this.time.minutes = minutes;
     }
 
-    let seconds = ~~(timeDifference / this.millisToSecondsCotient);
+    // tslint:disable-next-line:no-bitwise
+    const seconds: number = ~~(timeDifference / this.millisToSecondsCotient);
     if (seconds >= 1) {
       timeDifference = timeDifference - (seconds * this.millisToSecondsCotient);
       this.time.seconds = seconds;
