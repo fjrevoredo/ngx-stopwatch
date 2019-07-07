@@ -6,12 +6,12 @@ import {Observable, Subscription, timer} from "rxjs";
   selector: 'ngx-stopwatch',
   template: `
     <p>
-      {{formatTime(time.hours, 2)}} : {{formatTime(time.minutes, 2)}} : {{formatTime(time.seconds, 2)}} : <span *ngIf="showMillis"
-                                                                                                 class="millis">{{formatTime(time.milliseconds, 3)}}</span>
+      {{formatTime(time.hours, 2)}} : {{formatTime(time.minutes, 2)}} : {{formatTime(time.seconds, 2)}} : <span
+      *ngIf="showMillis"
+      class="millis">{{formatTime(time.milliseconds, 3)}}</span>
     </p>
     <p>
       <button (click)="startStopwatch()">Start</button>
-      <button (click)="stopStopwatch()">Stop</button>
       <button (click)="resetStopwatch()">Reset</button>
     </p>
 
@@ -20,19 +20,17 @@ import {Observable, Subscription, timer} from "rxjs";
 })
 export class NgxStopwatchComponent implements OnInit {
 
-  timerRef: any;
   running = false;
   showMillis = true;
   start: any;
   millisToHoursCotient = (1000 * 60 * 60);
   millisToMinutesCotient = (1000 * 60);
   millisToSecondsCotient = 1000;
-  tickerMin = 300;
-  tickerMax = 320;
   counter: number;
   time: TimeModel;
   increment = 50;
   timerObservable: Subscription;
+
   constructor() {
   }
 
@@ -44,17 +42,6 @@ export class NgxStopwatchComponent implements OnInit {
   private initStopwatch() {
     this.time = new TimeModel();
     this.start = new Date().getTime();
-  }
-
-  startTimer() {
-    this.running = !this.running;
-    if (this.running) {
-      this.timerRef = setInterval(() => {
-        this.incrementStopwatch();
-      });
-    } else {
-      clearInterval(this.timerRef);
-    }
   }
 
   private resetStopwatch() {
@@ -75,6 +62,8 @@ export class NgxStopwatchComponent implements OnInit {
       this.timerObservable = timer(0, this.increment).subscribe(ellapsedCycles => {
         this.incrementStopwatch();
       });
+    } else {
+      this.stopStopwatch();
     }
   }
 
@@ -86,50 +75,33 @@ export class NgxStopwatchComponent implements OnInit {
   }
 
   formatTime(time: number, digits: number) {
-    return time.toLocaleString('es-AR', {
-      minimumIntegerDigits: digits,
-      useGrouping: false,
-      maximumFractionDigits: 0
-    });
+    let fixedDigitNumber = time.toFixed(0);
+    while (fixedDigitNumber.length < digits) {
+      fixedDigitNumber = '0' + fixedDigitNumber;
+    }
+    return fixedDigitNumber;
   }
 
-  private incrementStopwatch() {
-    this.counter++;
-
+  incrementStopwatch() {
     let timeDifference = new Date().getTime() - this.start;
-
-
     let hours = ~~(timeDifference / this.millisToHoursCotient);
     if (hours >= 1) {
       timeDifference = timeDifference - (hours * this.millisToHoursCotient);
       this.time.hours = hours;
     }
 
-    let minutes =  ~~(timeDifference / this.millisToMinutesCotient);
+    let minutes = ~~(timeDifference / this.millisToMinutesCotient);
     if (minutes >= 1) {
       timeDifference = timeDifference - (minutes * this.millisToMinutesCotient);
       this.time.minutes = minutes;
     }
 
-    let seconds =  ~~(timeDifference / this.millisToSecondsCotient);
+    let seconds = ~~(timeDifference / this.millisToSecondsCotient);
     if (seconds >= 1) {
       timeDifference = timeDifference - (seconds * this.millisToSecondsCotient);
       this.time.seconds = seconds;
     }
     this.time.milliseconds = timeDifference;
-
-    // if(timeDifference >= 999){
-    //   console.log(timeDifference);
-    //   console.log(JSON.stringify(this.time));
-    // }
-
-    if(this.counter < 12) {
-      console.log(this.time.seconds);
-    }
-
-    // if(this.counter > this.tickerMin && this.counter < this.tickerMax) {
-    //   console.log(JSON.stringify(this.time));
-    // }
 
   }
 
