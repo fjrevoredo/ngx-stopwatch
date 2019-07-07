@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {TimeModel} from "./time.model";
+import {Observable, Subscription, timer} from "rxjs";
 
 @Component({
   selector: 'ngx-stopwatch',
@@ -30,6 +31,8 @@ export class NgxStopwatchComponent implements OnInit {
   tickerMax = 320;
   counter: number;
   time: TimeModel;
+  increment = 50;
+  timerObservable: Subscription;
   constructor() {
   }
 
@@ -57,7 +60,7 @@ export class NgxStopwatchComponent implements OnInit {
   private resetStopwatch() {
     if (this.running) {
       this.running = !this.running;
-      clearInterval(this.timerRef);
+      this.timerObservable.unsubscribe();
       this.initStopwatch();
     } else {
       this.initStopwatch();
@@ -66,18 +69,19 @@ export class NgxStopwatchComponent implements OnInit {
 
   startStopwatch() {
     if (!this.running) {
+      this.start = new Date().getTime();
       this.counter = 0;
       this.running = true;
-      this.timerRef = setInterval(() => {
+      this.timerObservable = timer(0, this.increment).subscribe(ellapsedCycles => {
         this.incrementStopwatch();
-      }, 10);
+      });
     }
   }
 
   stopStopwatch() {
     if (this.running) {
       this.running = !this.running;
-      clearInterval(this.timerRef);
+      this.timerObservable.unsubscribe();
     }
   }
 
@@ -94,9 +98,6 @@ export class NgxStopwatchComponent implements OnInit {
 
     let timeDifference = new Date().getTime() - this.start;
 
-    // if(this.counter > this.tickerMin && this.counter < this.tickerMax) {
-    //   console.log(timeDifference);
-    // }
 
     let hours = ~~(timeDifference / this.millisToHoursCotient);
     if (hours >= 1) {
@@ -117,9 +118,13 @@ export class NgxStopwatchComponent implements OnInit {
     }
     this.time.milliseconds = timeDifference;
 
-    if(timeDifference >= 999){
-      console.log(timeDifference);
-      console.log(JSON.stringify(this.time));
+    // if(timeDifference >= 999){
+    //   console.log(timeDifference);
+    //   console.log(JSON.stringify(this.time));
+    // }
+
+    if(this.counter < 12) {
+      console.log(this.time.seconds);
     }
 
     // if(this.counter > this.tickerMin && this.counter < this.tickerMax) {
