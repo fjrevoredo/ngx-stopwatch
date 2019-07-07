@@ -15,6 +15,10 @@ export class NgxStopwatchComponent implements OnInit {
   lapEnabled: boolean = true;
   @Input()
   showMillis: boolean = true;
+  @Input()
+  maxLaps: number = 10;
+  @Input()
+  cycleLaps: boolean = false;
 
   startButtonLabel: string = 'Start';
   laps: TimeModel[] = [];
@@ -67,7 +71,10 @@ export class NgxStopwatchComponent implements OnInit {
         this.incrementStopwatch();
       });
     } else {
-      if (this.lapEnabled) {
+      if (this.lapEnabled && this.laps.length <= this.maxLaps) {
+        if (this.laps.length === this.maxLaps) {
+          this.laps = [];
+        }
         this.laps.push(Object.assign({}, this.time));
       }
     }
