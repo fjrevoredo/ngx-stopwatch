@@ -38,12 +38,12 @@ $ npm install ngx-stopwatch --save
 Import `NgxStopwatchModule` in  in the root module(`AppModule`):
 ```typescript
 // Import library module
-import { NgxStopwatchModule } from 'ngx-spinner';
+import { NgxStopwatchModule } from 'ngx-stopwatch';
 
 @NgModule({
   imports: [
     ...,
-    NgxSpinnerModule
+    NgxStopwatchModule
   ]
 })
 export class AppModule { }
