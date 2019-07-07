@@ -1,0 +1,35 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+  <h1>
+    Welcome to {{ title }}!
+  </h1>
+
+  <img width="200" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+
+  <h2>Default</h2>
+    <ngx-stopwatch></ngx-stopwatch>
+
+  <h2 style="margin-top: 50px; color: cornflowerblue">Laps Disabled</h2>
+  <ngx-stopwatch [lapEnabled]="false"></ngx-stopwatch>
+
+  <h2 style="margin-top: 50px; color: darkolivegreen">Show Milliseconds Disabled</h2>
+  <ngx-stopwatch [showMillis]="false"></ngx-stopwatch>
+
+  <h2 style="margin-top: 50px; color: palevioletred">Both Disabled</h2>
+  <ngx-stopwatch [showMillis]="false" [lapEnabled]="false"></ngx-stopwatch>
+
+  <h2 style="margin-top: 50px; color: teal">Get Time Passed</h2>
+  <ngx-stopwatch (getTimePassed)="printTimePassed($event)"></ngx-stopwatch>
+
+  <h2 style="margin-top: 50px; margin-bottom: -8px; color: orange">i18n Support</h2>
+  <ngx-stopwatch language="es"></ngx-stopwatch>
+  <ngx-stopwatch language="cn"></ngx-stopwatch>
+
+  <hr>
+  <h2 style="margin-top: 50px; color: greenyellow">Advanced</h2>
+  <ngx-stopwatch [showControls]="false"></ngx-stopwatch>
+  <button (click)="start()">Custom parent start button</button>
+  <button (click)="reset()">Custom parent reset button</button>
+</div>
+
+
