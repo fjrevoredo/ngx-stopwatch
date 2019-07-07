@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {TimeModel} from './time.model';
 import {Subscription, timer} from 'rxjs';
 import {NgxStopwatchService, StopwatchEvent} from './ngx-stopwatch.service';
@@ -10,7 +10,7 @@ import {NgxStopwatchService, StopwatchEvent} from './ngx-stopwatch.service';
   templateUrl: 'ngx-stopwatch.component.html',
   styleUrls: ['ngx-stopwatch.component.scss']
 })
-export class NgxStopwatchComponent implements OnInit {
+export class NgxStopwatchComponent implements OnInit, OnDestroy {
 
   @Input()
   lapEnabled: boolean = true;
@@ -24,6 +24,8 @@ export class NgxStopwatchComponent implements OnInit {
   language: string = 'en';
   @Input()
   showControls: boolean = true;
+  @Output()
+  getTimePassed: EventEmitter<number> = new EventEmitter<number>();
 
   startButtonLabel: string;
   resetButtonLabel: string;
@@ -37,6 +39,7 @@ export class NgxStopwatchComponent implements OnInit {
   time: TimeModel;
   increment: number = 50;
   timerObservable: Subscription;
+  getStopwatchObservable: Subscription;
 
   constructor(protected stopwatchService: NgxStopwatchService) {
   }
@@ -45,7 +48,7 @@ export class NgxStopwatchComponent implements OnInit {
     this.i18nInit();
     this.time = new TimeModel();
     this.initStopwatch();
-    this.stopwatchService.getStopwatch().subscribe((stopwatchEvent: StopwatchEvent) => {
+    this.getStopwatchObservable = this.stopwatchService.getStopwatch().subscribe((stopwatchEvent: StopwatchEvent) => {
       if (stopwatchEvent.event === 'start') {
         this.startStopwatch();
       }
@@ -54,6 +57,11 @@ export class NgxStopwatchComponent implements OnInit {
         this.resetStopwatch();
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.getStopwatchObservable.unsubscribe();
+    this.timerObservable.unsubscribe();
   }
 
   private initStopwatch(): void {
@@ -65,6 +73,7 @@ export class NgxStopwatchComponent implements OnInit {
     if (this.running) {
       this.running = !this.running;
       this.timerObservable.unsubscribe();
+      this.getTimePassed.emit(this.convertToMillis(this.time));
       this.initStopwatch();
     } else {
       this.initStopwatch();
@@ -206,6 +215,10 @@ export class NgxStopwatchComponent implements OnInit {
       this.startButtonLabel = 'بداية';
     }
     this.resetButtonLabel = 'إعادة تعيين';
+  }
+
+  convertToMillis(time: TimeModel): number {
+    return  Number(time.milliseconds + (time.seconds * this.millisToSecondsCotient) + (time.minutes * this.millisToMinutesCotient) + (time.hours * this.millisToHoursCotient));
   }
 
 }

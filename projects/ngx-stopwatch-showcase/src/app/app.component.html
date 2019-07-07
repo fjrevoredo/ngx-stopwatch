@@ -18,6 +18,9 @@
   <h2 style="margin-top: 50px; color: palevioletred">Both Disabled</h2>
   <ngx-stopwatch [showMillis]="false" [lapEnabled]="false"></ngx-stopwatch>
 
+  <h2 style="margin-top: 50px; color: teal">Get Time Passed</h2>
+  <ngx-stopwatch (getTimePassed)="printTimePassed($event)"></ngx-stopwatch>
+
   <h2 style="margin-top: 50px; margin-bottom: -8px; color: orange">i18n Support</h2>
   <ngx-stopwatch language="es"></ngx-stopwatch>
   <ngx-stopwatch language="cn"></ngx-stopwatch>

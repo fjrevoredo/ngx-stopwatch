@@ -20,4 +20,8 @@ export class AppComponent {
   reset() {
     this.stopwatchService.reset();
   }
+
+  printTimePassed($event: any) {
+    alert($event);
+  }
 }
