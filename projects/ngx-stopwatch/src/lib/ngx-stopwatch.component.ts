@@ -1,25 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {TimeModel} from "./time.model";
-import {Observable, Subscription, timer} from "rxjs";
+import {Subscription, timer} from "rxjs";
 
 @Component({
   selector: 'ngx-stopwatch',
-  template: `
-    <p>
-      {{formatTime(time.hours, 2)}} : {{formatTime(time.minutes, 2)}} : {{formatTime(time.seconds, 2)}} : <span
-      *ngIf="showMillis"
-      class="millis">{{formatTime(time.milliseconds, 3)}}</span>
-    </p>
-    <p>
-      <button (click)="startStopwatch()">Start</button>
-      <button (click)="resetStopwatch()">Reset</button>
-    </p>
-
-  `,
+  templateUrl: 'ngx-stopwatch.component.html',
   styles: []
 })
 export class NgxStopwatchComponent implements OnInit {
-
+  lapEnabled = true;
+  laps: TimeModel[] = [];
   running = false;
   showMillis = true;
   start: any;
@@ -52,6 +42,10 @@ export class NgxStopwatchComponent implements OnInit {
     } else {
       this.initStopwatch();
     }
+
+    if(this.lapEnabled && this.laps.length > 0) {
+      this.laps = [];
+    }
   }
 
   startStopwatch() {
@@ -59,11 +53,11 @@ export class NgxStopwatchComponent implements OnInit {
       this.start = new Date().getTime();
       this.counter = 0;
       this.running = true;
-      this.timerObservable = timer(0, this.increment).subscribe(ellapsedCycles => {
+      this.timerObservable = timer(0, this.increment).subscribe(() => {
         this.incrementStopwatch();
       });
     } else {
-      this.stopStopwatch();
+      this.laps.push(Object.assign({}, this.time));
     }
   }
 
