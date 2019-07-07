@@ -10,8 +10,8 @@
     *ngIf="showMillis"
     class="millis"> : {{formatTime(time.milliseconds, 3)}}</span>
   </p>
-  <p>
+  <div *ngIf="showControls">
     <button class="button button-success" (click)="startStopwatch()">{{startButtonLabel}}</button>
     <button class="button button-danger" (click)="resetStopwatch()">{{resetButtonLabel}}</button>
-  </p>
+  </div>
 </div>

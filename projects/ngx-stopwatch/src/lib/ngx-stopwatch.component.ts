@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {TimeModel} from './time.model';
 import {Subscription, timer} from 'rxjs';
+import {NgxStopwatchService, StopwatchEvent} from './ngx-stopwatch.service';
 
 
 @Component({
@@ -21,6 +22,8 @@ export class NgxStopwatchComponent implements OnInit {
   cycleLaps: boolean = false;
   @Input()
   language: string = 'en';
+  @Input()
+  showControls: boolean = true;
 
   startButtonLabel: string;
   resetButtonLabel: string;
@@ -35,13 +38,22 @@ export class NgxStopwatchComponent implements OnInit {
   increment: number = 50;
   timerObservable: Subscription;
 
-  constructor() {
+  constructor(protected stopwatchService: NgxStopwatchService) {
   }
 
   ngOnInit(): void {
     this.i18nInit();
     this.time = new TimeModel();
     this.initStopwatch();
+    this.stopwatchService.getStopwatch().subscribe((stopwatchEvent: StopwatchEvent) => {
+      if (stopwatchEvent.event === 'start') {
+        this.startStopwatch();
+      }
+
+      if (stopwatchEvent.event === 'reset') {
+        this.resetStopwatch();
+      }
+    });
   }
 
   private initStopwatch(): void {

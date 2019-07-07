@@ -21,6 +21,12 @@
   <h2 style="margin-top: 50px; margin-bottom: -8px; color: orange">i18n Support</h2>
   <ngx-stopwatch language="es"></ngx-stopwatch>
   <ngx-stopwatch language="cn"></ngx-stopwatch>
+
+  <hr>
+  <h2 style="margin-top: 50px; color: greenyellow">Advanced</h2>
+  <ngx-stopwatch [showControls]="false"></ngx-stopwatch>
+  <button (click)="start()">Custom parent start button</button>
+  <button (click)="reset()">Custom parent reset button</button>
 </div>
 
 

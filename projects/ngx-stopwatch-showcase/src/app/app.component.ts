@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {NgxStopwatchService} from '../../../ngx-stopwatch/src/lib/ngx-stopwatch.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,16 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ngx-stopwatch-showcase';
+
+  constructor(protected stopwatchService: NgxStopwatchService) {
+
+  }
+
+  start() {
+    this.stopwatchService.start();
+  }
+
+  reset() {
+    this.stopwatchService.reset();
+  }
 }
