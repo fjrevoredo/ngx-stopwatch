@@ -1,8 +1,26 @@
 {
   "name": "ngx-stopwatch",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Minimalistic stopwatch for Angular applications",
   "author": "Francisco Revoredo <fjrevoredo@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fjrevoredo/ngx-stopwatch.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fjrevoredo/ngx-stopwatch/issues"
+  },
+  "homepage": "https://github.com/fjrevoredo/ngx-stopwatch",
+  "keywords": [
+    "angular",
+    "javascript",
+    "typescript",
+    "stopwatch",
+    "time",
+    "ngx-stopwatch",
+    "track"
+  ],
+  "license": "MIT",
   "peerDependencies": {
     "@angular/common": "^8.1.0",
     "@angular/core": "^8.1.0"
