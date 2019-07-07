@@ -20,14 +20,14 @@ export class NgxStopwatchService {
   }
 
   public start(): Promise<any> {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         this.stopwatchObservable.next({event: 'start'});
         resolve(true);
     });
   }
 
   public reset(): Promise<any> {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       this.stopwatchObservable.next({event: 'reset'});
       resolve(true);
     });

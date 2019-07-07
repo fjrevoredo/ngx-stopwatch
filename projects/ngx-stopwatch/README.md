@@ -1,24 +1,74 @@
-# NgxStopwatch
+# Ngx-Stopwatch 1.0.1
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.1.0.
+Minimalistic stopwatch for Angular applications
 
-## Code scaffolding
+![GitHub](https://img.shields.io/github/license/fjrevoredo/ngx-stopwatch.svg)
+![GitHub tag (latest by date)](https://img.shields.io/github/tag-date/fjrevoredo/ngx-stopwatch.svg)
+![GitHub repo size](https://img.shields.io/github/repo-size/fjrevoredo/ngx-stopwatch.svg)
+![npm bundle size](https://img.shields.io/bundlephobia/min/ngx-stopwatch.svg)
+![npm](https://img.shields.io/npm/dw/ngx-stopwatch.svg)
 
-Run `ng generate component component-name --project ngx-stopwatch` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project ngx-stopwatch`.
-> Note: Don't forget to add `--project ngx-stopwatch` or else it will be added to the default project in your `angular.json` file. 
+[![Support](https://img.shields.io/badge/Support-Angular%207%2B-blue.svg)]()
 
-## Build
+![GitHub stars](https://img.shields.io/github/stars/fjrevoredo/ngx-stopwatch.svg?style=social)
+![GitHub followers](https://img.shields.io/github/followers/fjrevoredo.svg?style=social)
 
-Run `ng build ngx-stopwatch` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Table of contents
 
-## Publishing
+- [Details](#details)
+- [Installation](#installation)
+- [Usage](#usage)
 
-After building your library with `ng build ngx-stopwatch`, go to the dist folder `cd dist/ngx-stopwatch` and run `npm publish`.
+## Details
+There's a showcase project with different examples on how to use the library. I don't think you'll have any problems using it in your projects. I aimed at keeping it simple yet flexible.
 
-## Running unit tests
+Feel free to comment, fork or submit a pull request.
 
-Run `ng test ngx-stopwatch` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Installation
 
-## Further help
+`ngx-stopwatch` is available via [npm](https://www.npmjs.com/package/ngx-stopwatch)
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Using npm:
+```bash
+$ npm install ngx-stopwatch --save
+```
+
+## Usage
+
+Import `NgxStopwatchModule` in  in the root module(`AppModule`):
+```typescript
+// Import library module
+import { NgxStopwatchModule } from 'ngx-spinner';
+
+@NgModule({
+  imports: [
+    ...,
+    NgxSpinnerModule
+  ]
+})
+export class AppModule { }
+```
+
+Add `NgxStopwatchService` service wherever you want to use the `ngx-stopwatch`.
+```typescript
+import { NgxStopwatchService } from 'ngx-stopwatch';
+
+class AppComponent {
+  constructor(protected stopwatchService: NgxStopwatchService) {}
+
+  start() {
+    this.stopwatchService.start();
+  }
+
+  reset() {
+    this.stopwatchService.reset();
+  }
+}
+```
+
+You can now place it in your templates like this:
+```html
+<ngx-stopwatch></ngx-stopwatch>
+```
+
+You can find more examples in the showcase project.
